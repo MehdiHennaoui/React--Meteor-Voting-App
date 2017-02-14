@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 
 let hello = 'Scoot';
 
-//let headingClick = function() {
-
-//	console.log('hello');
-
-//}
 
 export default class App extends Component {
 
+	constructor(){
+
+		super();
+		
+		this.state = {
+
+			count: 0
+		
+		}
+
+	}
+
 	headingClick() {
 
-		console.log('hello');
+		this.setState({count: this.state.count + 1});
 
 	}
 
@@ -20,10 +27,30 @@ export default class App extends Component {
 
 		return (
 			
-			<h1 onClick={this.headingClick}>Hello {hello}!</h1>
+			<header onClick={this.headingClick.bind(this)}>
+				
+				
+			<Heading count={this.state.count}/>
+			
+			</header>
 
 		);
 
 	};
+
+}
+
+class Heading extends Component {
+
+	render(){
+		
+		return(
+
+				<h1>{this.props.count}</h1>
+
+			);
+		
+
+	}
 
 }
