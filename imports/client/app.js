@@ -17,18 +17,17 @@ class App extends Component {
 
 		if(itemOne != '' && itemTwo != '') {
 
-		console.log(this.refs.itemOne.value.trim());
-		 Items.insert({
-    		itemOne: {
-      			text: itemOne,
-      			value: 0,
-    		},
-    
-    		itemTwo: {
-      			text: itemTwo,
-      			value: 0,
-    		}
-  			});
+			Meteor.call('insertNewItem', itemOne, itemTwo, (err, res) => {
+				
+				if(!err){
+
+					this.refs.itemOne.value = '';
+					this.refs.itemTwo.value='';
+
+				}
+			
+			});
+		
 		} 
 
 	}
