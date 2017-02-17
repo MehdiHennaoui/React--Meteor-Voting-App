@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { LoginButtons } from 'meteor/okgrow:accounts-ui-react';
+
+
 import	Item from './Item';
 
 import Items from '../api/Items';
@@ -36,7 +39,7 @@ class App extends Component {
 				<header>
 					
 			 		<h1>Level up Voting</h1>
-				
+					<LoginButtons />
 				</header>
 
 				<main>

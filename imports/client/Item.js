@@ -4,23 +4,30 @@ import Items from '../api/Items';
 export default class Item extends Component {
 	
 	voteOne(){
+		if(Meteor.userId()){
 
 		Items.update(this.props.item._id,{
 			$inc: {
 				'itemOne.value':1
 			}
-		})
+		})	
+
+		}
+		
 
 	}
 
 	voteTwo(){
-
+		
+		if(Meteor.userId()){
+		
 		Items.update(this.props.item._id,{
 			$inc: {
 				'itemTwo.value':1
 			}
 		})
-
+		
+		}
 	}
 
 
