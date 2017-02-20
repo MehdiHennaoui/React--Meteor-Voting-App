@@ -31,6 +31,20 @@ class App extends Component {
 		} 
 
 	}
+	
+	showAll(){
+		if(this.props.showAll){
+
+			Session.set('showAll', false);
+
+		} else {
+
+			Session.set('showAll', true);
+
+		}
+		
+
+	}
 	render() {
 		if(!this.props.ready){
 			
@@ -44,7 +58,9 @@ class App extends Component {
 					
 			 		<h1>Level up Voting</h1>
 					<LoginButtons />
-				
+					<button onClick={this.showAll.bind(this)}>
+						Show {this.props.showAll ? 'One' : "All"}
+					</button>
 				</header>
 
 				<main>
@@ -70,13 +86,14 @@ class App extends Component {
 export default createContainer(() => {
 
 	let itemsSub = Meteor.subscribe('allItems');
+	let showAll = Session.get('showAll');
 	
 	return {
-
+		showAll,
 		ready: itemsSub.ready(),
 		items: Items.find({}, {
 
-			limit: 1,
+			limit: showAll ? 50 : 1,
 			sort: {
 
 				lastUpdated: 1

@@ -7,7 +7,7 @@ if(Meteor.isServer) {
 
 		return Items.find({}, {
 
-			limit: 1,
+			limit: 50,
 			sort: {
 
 				lastUpdated: 1
