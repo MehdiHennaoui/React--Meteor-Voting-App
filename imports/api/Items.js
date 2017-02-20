@@ -5,59 +5,81 @@ if(Meteor.isServer) {
 
 	Meteor.publish('allItems', function(){
 
-		return Items.find();
-	
+		return Items.find({}, {
+
+			limit: 1,
+			sort: {
+
+				lastUpdated: 1
+
+			}
+
+		});
+
 	})
 
 	Meteor.methods({
 
-	insertNewItem(itemOne, itemTwo) {
-		
-		check(itemOne, String);
-		check(itemTwo, String);
-		 
-		 Items.insert({
-    		itemOne: {
-      			text: itemOne,
-      			value: 0,
-    		},
-    
-    		itemTwo: {
-      			text: itemTwo,
-      			value: 0,
-    		}
-  			});
+		insertNewItem(itemOne, itemTwo) {
 
-	},
-	voteOnItem(item, position){
-		
-		if(Meteor.userId()){
-		
-		if (position === 'itemOne'){
-			Items.update(item._id,{
-			$inc: {
-				
-				'itemOne.value':1
-			
-			}
-		})	
-		}else {
+			check(itemOne, String);
+			check(itemTwo, String);
 
-			Items.update(item._id, {
-				
-				$inc: {
+			Items.insert({
+				itemOne: {
+					text: itemOne,
+					value: 0,
+				},
 
-					'itemTwo.value': 1
+				itemTwo: {
+					text: itemTwo,
+					value: 0,
+				}
+			});
+
+		},
+
+		voteOnItem(item, position){
+			check(item, Object);
+			let lastUpdated = new Date();
+
+			if(Meteor.userId()){
+
+				if (position === 'itemOne'){
+					Items.update(item._id,{
+						$inc: {
+
+							'itemOne.value':1
+
+						},
+						$set: {
+
+							lastUpdated
+
+						}
+					})	
+				}else {
+
+					Items.update(item._id, {
+
+						$inc: {
+
+							'itemTwo.value': 1
+
+						},
+						$set: {
+
+							lastUpdated
+
+						}
+					})
 
 				}
-			})
 
+
+
+			}
 		}
-
-			
-
-		}
-	}
 
 	})
 
